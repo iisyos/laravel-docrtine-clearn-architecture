@@ -2,63 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Doctrine\ORM\Entity\Todo;
+use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(
+        private EntityManagerInterface $em
+    ) {}
+
     public function index()
     {
-        //
+        $todos = $this->em->getRepository(Todo::class)->findAll();
+
+        return view('todos.index', compact('todos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+        ]);
+
+        $todo = new Todo($request->input('title'));
+        $this->em->persist($todo);
+        $this->em->flush();
+
+        return redirect()->route('todos.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function destroy(int $id)
     {
-        //
-    }
+        $todo = $this->em->find(Todo::class, $id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        if ($todo) {
+            $this->em->remove($todo);
+            $this->em->flush();
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('todos.index');
     }
 }
