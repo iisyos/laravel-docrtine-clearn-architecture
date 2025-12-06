@@ -38,8 +38,10 @@ return [
             'proxies'       => [
                 'namespace'     => 'DoctrineProxies',
                 'path'          => storage_path('proxies'),
-                'auto_generate' => env('DOCTRINE_PROXY_AUTOGENERATE', false)
+                'auto_generate' => env('DOCTRINE_PROXY_AUTOGENERATE', true)
             ],
+
+            'lazy_ghost_objects' => false,
 
             /*
             |--------------------------------------------------------------------------

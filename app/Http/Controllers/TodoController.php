@@ -25,6 +25,9 @@ class TodoController extends Controller
             'title' => 'required|string|max:255',
         ]);
 
+        // $todo = new Todo($request->input('title'));
+        // $this->em->persist($todo);
+        // $this->em->flush();
         $todo = new Todo($request->input('title'));
         $this->em->persist($todo);
         $this->em->flush();
