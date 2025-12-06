@@ -5,10 +5,10 @@ namespace App\Doctrine\ORM\Entity;
 class Todo
 {
     private int $id;
-    private string $title;
+    private Title $title;
     private bool $completed = false;
 
-    public function __construct(string $title)
+    public function __construct(Title $title)
     {
         $this->title = $title;
     }
@@ -18,7 +18,7 @@ class Todo
         return $this->id;
     }
 
-    public function getTitle(): string
+    public function getTitle(): Title
     {
         return $this->title;
     }

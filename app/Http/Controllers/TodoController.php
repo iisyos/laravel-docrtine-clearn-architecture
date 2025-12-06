@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Doctrine\ORM\Entity\Todo;
+use App\Doctrine\ORM\Entity\{Todo, Title};
 use Doctrine\ORM\EntityManagerInterface;
 use Illuminate\Http\Request;
 
@@ -28,7 +28,7 @@ class TodoController extends Controller
         // $todo = new Todo($request->input('title'));
         // $this->em->persist($todo);
         // $this->em->flush();
-        $todo = new Todo($request->input('title'));
+        $todo = new Todo(new Title($request->input('title')));
         $this->em->persist($todo);
         $this->em->flush();
 

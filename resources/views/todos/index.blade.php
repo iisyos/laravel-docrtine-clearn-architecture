@@ -29,7 +29,7 @@
     <ul>
         @foreach ($todos as $todo)
             <li>
-                <span>{{ $todo->getTitle() }}</span>
+                <span>{{ $todo->getTitle()->getName() }}</span>
                 <form action="{{ route('todos.destroy', $todo->getId()) }}" method="POST" style="margin: 0;">
                     @csrf
                     @method('DELETE')
